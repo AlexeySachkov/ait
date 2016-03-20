@@ -61,7 +61,9 @@ int main(int argc, char* argv[])
 {
 	vector<string> args(argv, argv + argc);
 
-	if (find(args.begin(), args.end(), "-h") != args.end() || find(args.begin(), args.end(), "--help") != args.end())
+	if (find(args.begin(), args.end(), "-h") != args.end() 
+		|| 
+		find(args.begin(), args.end(), "--help") != args.end())
 	{
 		print_usage(args[0]);
 	}
@@ -73,7 +75,7 @@ int main(int argc, char* argv[])
 
 		ifstream input_file;
 		ofstream output_file_stream;
-		streambuf * output_file;
+		streambuf * output_file = cout.rdbuf();
 
 		if (args.size() < 2)
 		{
@@ -103,7 +105,8 @@ int main(int argc, char* argv[])
 				it = next(it);
 				if (it == args.end())
 				{
-					cout << "Cannot find value for " << *(--it) << " argument!" << endl;
+					cout << "Cannot find value for " << *(--it) 
+						 << " argument!" << endl;
 					return -1;
 				}
 				else
@@ -118,7 +121,8 @@ int main(int argc, char* argv[])
 					}
 					else
 					{
-						cout << "Cannot parse value for " << *(--it) << " argument!" << endl;
+						cout << "Cannot parse value for " << *(--it) 
+							 << " argument!" << endl;
 						return -1;
 					}
 				}
@@ -135,7 +139,8 @@ int main(int argc, char* argv[])
 				it = next(it);
 				if (it == args.end())
 				{
-					cout << "Cannot find value for " << *(--it) << " argument!" << endl;
+					cout << "Cannot find value for " << *(--it) 
+						 << " argument!" << endl;
 					return -1;
 				}
 				else
@@ -150,7 +155,8 @@ int main(int argc, char* argv[])
 					output_file_stream.open(filename_for_output);
 					if (!output_file_stream.is_open())
 					{
-						cout << "Cannot open file " << filename_for_output << " for print results!" << endl;
+						cout << "Cannot open file " << filename_for_output 
+							 << " for print results!" << endl;
 						return -1;
 					}
 					else
@@ -185,7 +191,8 @@ void huffman_alg(const string &input, ostream &out)
 	map<char, int> letterCounts;
 	map<char, double> probability;
 
-	out << "Source text (" << input.size() << " symbols): " << endl << input << endl;
+	out << "Source text (" << input.size() << " symbols): " 
+		<< endl << input << endl;
 
 	for (size_t i = 0; i < input.size(); ++i)
 	{
@@ -201,7 +208,8 @@ void huffman_alg(const string &input, ostream &out)
 	{
 		letter l(it->first, (double)it->second / (double)input.size());
 		v[pos] = l;
-		out << "Symbol '" << l.c << "' presents " << it->second << " times. Probability: " << l.probability << endl;
+		out << "Symbol '" << l.c << "' presents " << it->second 
+			<< " times. Probability: " << l.probability << endl;
 	}
 
 	vector<pair<double, int>> w;
